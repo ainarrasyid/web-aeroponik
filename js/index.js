@@ -34,7 +34,7 @@ let monthList = [
   "November",
   "Desember",
 ];
-tanggal.innerHTML = `${now.getDay()} ${
+tanggal.innerHTML = `${now.getDay() - 2} ${
   monthList[now.getMonth()]
 } ${now.getFullYear()}`;
 
