@@ -25,20 +25,73 @@
         </nav>
     </header>
     <main>
-        <div class="text-center fs-3 text-color fw-bolder mt-3 mb-4">
+        <div class="text-center fs-1 text-color fw-bolder mt-3 mb-5">
             SISTEM MONITORING KELEMBABAN AEROPONIK BERBASIS INTERNET OF THINGS
         </div>
-        <div id="date" class="text-center fs-5 fw-bold text-color">loading...</div>
-        <div id="time" class="text-center fs-5 fw-bold text-color">loading...</div>
-        <div id="statistic" class="row mt-4">
-            <div class="col">
+        <div id="date" class="text-center fs-3 fw-bold text-color">loading...</div>
+        <div id="time" class="text-center fs-3 fw-bold text-color">loading...</div>
+        <div id="statistic" class="row mt-4 ms-5 me-5">
+            <div class="col mb-3">
                 <div class="card border-secondary">
-                    <div class="card-header primary border-0">hehe</div>
-                    <div class="card-body secondary p-2">
-                        <div class="text-center fs-4 text-color fw-bold">Kondisi Lampu Pertumbuhan</div>
+                    <div class="card-header primary border-0 d-flex flex-column align-items-center">
+                        <img src="/images/lamp.png" alt="humid" class="img-card p-1">
+                        <div id="lamp" class="fs-2 fw-bold text-color mt-3 mb-3">Loading</div>
+                    </div>
+                    <div class="card-body secondary p-2 d-flex align-items-center justify-content-center"
+                        style="min-height: 5.5rem;">
+                        <div class="text-center fs-5 text-color fw-bold">Kondisi Lampu Pertumbuhan</div>
                     </div>
                 </div>
             </div>
+            <div class="col mb-3">
+                <div class="card border-secondary">
+                    <div class="card-header primary border-0 d-flex flex-column align-items-center">
+                        <img src="/images/temperature.png" alt="humid" class="img-card p-1">
+                        <div id="temp" class="fs-2 fw-bold text-color mt-3 mb-3">Loading</div>
+                    </div>
+                    <div class="card-body secondary p-2 d-flex align-items-center justify-content-center"
+                        style="min-height: 5.5rem;">
+                        <div class="text-center fs-5 text-color fw-bold align-middle">Suhu</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-3">
+                <div class="card border-secondary">
+                    <div class="card-header primary border-0 d-flex flex-column align-items-center">
+                        <img src="/images/humidity.png" alt="humid" class="img-card p-1">
+                        <div id="humid" class="fs-2 fw-bold text-color mt-3 mb-3">Loading</div>
+                    </div>
+                    <div class="card-body secondary p-2 d-flex align-items-center justify-content-center"
+                        style="min-height: 5.5rem;">
+                        <div class="text-center fs-5 text-color fw-bold">Kelembaban Akar Tanaman</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-3">
+                <div class="card border-secondary">
+                    <div class="card-header primary border-0 d-flex flex-column align-items-center">
+                        <img src="/images/water.png" alt="humid" class="img-card p-1">
+                        <div id="water" class="fs-2 fw-bold text-color mt-3 mb-3">Loading</div>
+                    </div>
+                    <div class="card-body secondary p-2 d-flex align-items-center justify-content-center"
+                        style="min-height: 5.5rem;">
+                        <div class="text-center fs-5 text-color fw-bold">Level Ketinggian Air</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-3">
+                <div class="card border-secondary">
+                    <div class="card-header primary border-0 d-flex flex-column align-items-center">
+                        <img src="/images/pompa.png" alt="humid" class="img-card p-1">
+                        <div id="pump" class="fs-2 fw-bold text-color mt-3 mb-3">Loading</div>
+                    </div>
+                    <div class="card-body secondary p-2 d-flex align-items-center justify-content-center"
+                        style="min-height: 5.5rem;">
+                        <div class="text-center fs-5 text-color fw-bold">Kondisi Pompa Air</div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </main>
     <footer></footer>
@@ -46,6 +99,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-database.js"></script>
+    <script src="/js/index.js"></script>
+
 </body>
 
 </html>
