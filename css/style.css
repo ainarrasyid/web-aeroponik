@@ -1,0 +1,40 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --color-primary: #f3ffdb;
+  --text-primary: #2b601b;
+  --color-secondary: #b9e567;
+}
+
+.navbar {
+  padding: 0.5rem 3rem;
+}
+
+.primary {
+  background: var(--color-primary);
+}
+
+.secondary {
+  background: var(--color-secondary);
+}
+
+.text-color {
+  color: var(--text-primary);
+}
+
+.nav-logo {
+  width: 13rem;
+  height: 4rem;
+}
+
+.border-secondary {
+  border: solid var(--color-secondary) 0.2rem !important;
+}
+
+main {
+  padding: 3rem;
+}
