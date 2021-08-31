@@ -60,8 +60,8 @@ database.ref("data/realtime").on("value", (snapshot) => {
   let data = snapshot.val();
   //   console.log(data);
   lamp.innerHTML = data.growLight;
-  temp.innerHTML = data.suhu.toFixed(2);
-  humidity.innerHTML = data.humid.toFixed(2);
+  temp.innerHTML = `${data.suhu.toFixed(2)} &#176C`;
+  humidity.innerHTML = `${data.humid.toFixed(2)}%`;
   waterLevel.innerHTML = data.level;
   motorPump.innerHTML = data.pompa;
 });
