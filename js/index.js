@@ -23,6 +23,7 @@ let tempChart = document.getElementById("tempChart");
 let labels = [];
 let tempData = [];
 let humidData = [];
+let dataToDownload = [];
 
 let now = new Date();
 let monthList = [
@@ -83,6 +84,7 @@ let humidGraphic = new Chart(humidChart, {
         borderColor: ["rgba(43, 96, 27, 1)"],
         borderWidth: 2,
         tension: 0.2,
+        pointRadius: 1,
       },
     ],
   },
@@ -107,6 +109,7 @@ let tempGraphic = new Chart(tempChart, {
         borderColor: ["rgba(43, 96, 27, 1)"],
         borderWidth: 2,
         tension: 0.2,
+        pointRadius: 1,
       },
     ],
   },
@@ -127,14 +130,6 @@ function addData(chart, label, data) {
   chart.update();
 }
 
-// database.ref("data/log").on("value", (snapshot) => {
-//   let hehehehehe = [];
-//   for (let value of Object.entries(snapshot.val())) {
-//     hehehehehe.push(value[1]);
-//   }
-//   console.log(hehehehehe.length);
-// });
-
 database.ref("data/log").on("child_added", (snapshot) => {
   let tanggal = new Date();
   let data = snapshot.val();
@@ -148,7 +143,6 @@ database.ref("data/log").on("child_added", (snapshot) => {
   let timestamp = new Date(parseInt(data.timestamp) * 1000 - 25200000);
 
   if (parseInt(data.timestamp) - 25200 >= epochs) {
-    console.log(parseInt(data.timestamp), epochs);
     addData(
       humidGraphic,
       timestamp.toString().split(" ")[4].slice(0, 5),
@@ -160,6 +154,45 @@ database.ref("data/log").on("child_added", (snapshot) => {
       data.suhu
     );
   }
-  // timestamp.toString().split(" ")[4].slice(0, 5)
-  // console.log(data);
 });
+
+database.ref("data/log").on("value", (snapshot) => {
+  dataToDownload = [];
+  for (let value of Object.entries(snapshot.val())) {
+    dataToDownload.push(value[1]);
+  }
+  // console.log(dataToDownload);
+});
+
+const download = function (data) {
+  const blob = new Blob([data], { type: "text/csv" });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.setAttribute("hidden", "");
+  a.setAttribute("href", url);
+  a.setAttribute("download", "Data-Sensor.csv");
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+};
+
+const objectToCsv = function () {
+  const csvRows = [];
+  const headers = Object.keys(dataToDownload[0]);
+  csvRows.push(headers.join(","));
+
+  for (const row of dataToDownload) {
+    const values = headers.map((header) => {
+      const escaped = ("" + row[header]).replace(/"/g, '\\"');
+      return `"${escaped}"`;
+    });
+    csvRows.push(values.join(","));
+  }
+  // console.log(csvRows.join("\n"));
+  download(csvRows.join("\n"));
+};
+
+(function () {
+  const button = document.getElementById("downloadCSV");
+  button.addEventListener("click", objectToCsv);
+})();
