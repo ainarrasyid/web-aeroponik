@@ -15,9 +15,14 @@ let temp = document.getElementById("temp");
 let humidity = document.getElementById("humid");
 let waterLevel = document.getElementById("water");
 let motorPump = document.getElementById("pump");
-
 let tanggal = document.getElementById("date");
 let waktu = document.getElementById("time");
+
+let humidChart = document.getElementById("humidChart");
+let tempChart = document.getElementById("tempChart");
+let labels = [];
+let tempData = [];
+let humidData = [];
 
 let now = new Date();
 let monthList = [
@@ -66,7 +71,95 @@ database.ref("data/realtime").on("value", (snapshot) => {
   motorPump.innerHTML = data.pompa;
 });
 
+let humidGraphic = new Chart(humidChart, {
+  type: "line",
+  data: {
+    labels: labels.slice(labels.length - 10, labels.length),
+    datasets: [
+      {
+        label: "Kelembaban (%)",
+        data: humidData.slice(humidData.length - 10, humidData.length),
+        backgroundColor: ["rgba(43, 96, 27, 0.5)"],
+        borderColor: ["rgba(43, 96, 27, 1)"],
+        borderWidth: 2,
+        tension: 0.2,
+      },
+    ],
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  },
+});
+
+let tempGraphic = new Chart(tempChart, {
+  type: "line",
+  data: {
+    labels: labels,
+    datasets: [
+      {
+        label: "Suhu (Celcius)",
+        data: tempData,
+        backgroundColor: ["rgba(43, 96, 27, 0.5)"],
+        borderColor: ["rgba(43, 96, 27, 1)"],
+        borderWidth: 2,
+        tension: 0.2,
+      },
+    ],
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  },
+});
+
+function addData(chart, label, data) {
+  chart.data.labels.push(label);
+  chart.data.datasets.forEach((dataset) => {
+    dataset.data.push(data);
+  });
+  chart.update();
+}
+
 // database.ref("data/log").on("value", (snapshot) => {
-//   let data = snapshot.val();
-// //   console.log(data);
+//   let hehehehehe = [];
+//   for (let value of Object.entries(snapshot.val())) {
+//     hehehehehe.push(value[1]);
+//   }
+//   console.log(hehehehehe.length);
 // });
+
+database.ref("data/log").on("child_added", (snapshot) => {
+  let tanggal = new Date();
+  let data = snapshot.val();
+  let dd = tanggal.getDay() - 2;
+  let mm = tanggal.getMonth();
+  let yyyy = tanggal.getFullYear();
+  let hh = tanggal.getHours() - 1;
+  let m = tanggal.getMinutes();
+  let waktu = new Date(yyyy, mm, dd, hh, m, 00, 00);
+  let epochs = Math.floor(waktu / 1000);
+  let timestamp = new Date(parseInt(data.timestamp) * 1000 - 25200000);
+
+  if (parseInt(data.timestamp) - 25200 >= epochs) {
+    console.log(parseInt(data.timestamp), epochs);
+    addData(
+      humidGraphic,
+      timestamp.toString().split(" ")[4].slice(0, 5),
+      data.humid
+    );
+    addData(
+      tempGraphic,
+      timestamp.toString().split(" ")[4].slice(0, 5),
+      data.suhu
+    );
+  }
+  // timestamp.toString().split(" ")[4].slice(0, 5)
+  // console.log(data);
+});

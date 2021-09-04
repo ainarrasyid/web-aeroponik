@@ -30,7 +30,7 @@
         </div>
         <div id="date" class="text-center fs-3 fw-bold text-color">loading...</div>
         <div id="time" class="text-center fs-3 fw-bold text-color">loading...</div>
-        <div id="statistic" class="row mt-4">
+        <div id="statistic" class="row mt-4 mb-4">
             <div class="col mb-3">
                 <div class="card border-secondary">
                     <div class="card-header primary border-0 d-flex flex-column align-items-center">
@@ -91,7 +91,25 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div id="graphic" class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header secondary fw-bold text-color">Grafik Kelembaban</div>
+                    <div class="card-body">
+                        <canvas id="humidChart"></canvas>
+                    </div>
+                </div>
 
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-header secondary fw-bold  text-color">Grafik Suhu</div>
+                    <div class="card-body">
+                        <canvas id="tempChart"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
     <footer></footer>
@@ -101,6 +119,7 @@
         crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-database.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
     <script src="/js/index.js"></script>
 
 </body>
