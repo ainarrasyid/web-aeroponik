@@ -15,7 +15,7 @@ let temp = document.getElementById("temp");
 let humidity = document.getElementById("humid");
 let waterLevel = document.getElementById("water");
 let motorPump = document.getElementById("pump");
-let tanggal = document.getElementById("date");
+let tanggalan = document.getElementById("date");
 let waktu = document.getElementById("time");
 
 let humidChart = document.getElementById("humidChart");
@@ -25,7 +25,7 @@ let tempData = [];
 let humidData = [];
 let dataToDownload = [];
 
-let now = new Date();
+let dateNow = new Date();
 let monthList = [
   "Januari",
   "Februari",
@@ -40,9 +40,11 @@ let monthList = [
   "November",
   "Desember",
 ];
-tanggal.innerHTML = `${now.getDay() - 2} ${
-  monthList[now.getMonth()]
-} ${now.getFullYear()}`;
+tanggalan.innerHTML = `${dateNow.getDate()} ${
+  monthList[dateNow.getMonth()]
+} ${dateNow.getFullYear()}`;
+
+console.log(dateNow.getDate());
 
 function time() {
   var d = new Date();
@@ -133,7 +135,7 @@ function addData(chart, label, data) {
 database.ref("data/log").on("child_added", (snapshot) => {
   let tanggal = new Date();
   let data = snapshot.val();
-  let dd = tanggal.getDay() - 2;
+  let dd = tanggal.getDate();
   let mm = tanggal.getMonth();
   let yyyy = tanggal.getFullYear();
   let hh = tanggal.getHours() - 1;
@@ -142,6 +144,7 @@ database.ref("data/log").on("child_added", (snapshot) => {
   let epochs = Math.floor(waktu / 1000);
   let timestamp = new Date(parseInt(data.timestamp) * 1000 - 25200000);
 
+  // console.log(data);
   if (parseInt(data.timestamp) - 25200 >= epochs) {
     addData(
       humidGraphic,
@@ -164,35 +167,35 @@ database.ref("data/log").on("value", (snapshot) => {
   // console.log(dataToDownload);
 });
 
-const download = function (data) {
-  const blob = new Blob([data], { type: "text/csv" });
-  const url = window.URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.setAttribute("hidden", "");
-  a.setAttribute("href", url);
-  a.setAttribute("download", "Data-Sensor.csv");
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-};
+// const download = function (data) {
+//   const blob = new Blob([data], { type: "text/csv" });
+//   const url = window.URL.createObjectURL(blob);
+//   const a = document.createElement("a");
+//   a.setAttribute("hidden", "");
+//   a.setAttribute("href", url);
+//   a.setAttribute("download", "Data-Sensor.csv");
+//   document.body.appendChild(a);
+//   a.click();
+//   document.body.removeChild(a);
+// };
 
-const objectToCsv = function () {
-  const csvRows = [];
-  const headers = Object.keys(dataToDownload[0]);
-  csvRows.push(headers.join(","));
+// const objectToCsv = function () {
+//   const csvRows = [];
+//   const headers = Object.keys(dataToDownload[0]);
+//   csvRows.push(headers.join(","));
 
-  for (const row of dataToDownload) {
-    const values = headers.map((header) => {
-      const escaped = ("" + row[header]).replace(/"/g, '\\"');
-      return `"${escaped}"`;
-    });
-    csvRows.push(values.join(","));
-  }
-  // console.log(csvRows.join("\n"));
-  download(csvRows.join("\n"));
-};
+//   for (const row of dataToDownload) {
+//     const values = headers.map((header) => {
+//       const escaped = ("" + row[header]).replace(/"/g, '\\"');
+//       return `"${escaped}"`;
+//     });
+//     csvRows.push(values.join(","));
+//   }
+//   // console.log(csvRows.join("\n"));
+//   download(csvRows.join("\n"));
+// };
 
-(function () {
-  const button = document.getElementById("downloadCSV");
-  button.addEventListener("click", objectToCsv);
-})();
+// (function () {
+//   const button = document.getElementById("downloadCSV");
+//   button.addEventListener("click", objectToCsv);
+// })();
