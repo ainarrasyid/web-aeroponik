@@ -167,35 +167,35 @@ database.ref("data/log").on("value", (snapshot) => {
   // console.log(dataToDownload);
 });
 
-// const download = function (data) {
-//   const blob = new Blob([data], { type: "text/csv" });
-//   const url = window.URL.createObjectURL(blob);
-//   const a = document.createElement("a");
-//   a.setAttribute("hidden", "");
-//   a.setAttribute("href", url);
-//   a.setAttribute("download", "Data-Sensor.csv");
-//   document.body.appendChild(a);
-//   a.click();
-//   document.body.removeChild(a);
-// };
+const download = function (data) {
+  const blob = new Blob([data], { type: "text/csv" });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.setAttribute("hidden", "");
+  a.setAttribute("href", url);
+  a.setAttribute("download", "Data-Sensor.csv");
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+};
 
-// const objectToCsv = function () {
-//   const csvRows = [];
-//   const headers = Object.keys(dataToDownload[0]);
-//   csvRows.push(headers.join(","));
+const objectToCsv = function () {
+  const csvRows = [];
+  const headers = Object.keys(dataToDownload[0]);
+  csvRows.push(headers.join(","));
 
-//   for (const row of dataToDownload) {
-//     const values = headers.map((header) => {
-//       const escaped = ("" + row[header]).replace(/"/g, '\\"');
-//       return `"${escaped}"`;
-//     });
-//     csvRows.push(values.join(","));
-//   }
-//   // console.log(csvRows.join("\n"));
-//   download(csvRows.join("\n"));
-// };
+  for (const row of dataToDownload) {
+    const values = headers.map((header) => {
+      const escaped = ("" + row[header]).replace(/"/g, '\\"');
+      return `"${escaped}"`;
+    });
+    csvRows.push(values.join(","));
+  }
+  // console.log(csvRows.join("\n"));
+  download(csvRows.join("\n"));
+};
 
-// (function () {
-//   const button = document.getElementById("downloadCSV");
-//   button.addEventListener("click", objectToCsv);
-// })();
+(function () {
+  const button = document.getElementById("downloadCSV");
+  button.addEventListener("click", objectToCsv);
+})();
