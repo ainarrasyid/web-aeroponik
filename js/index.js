@@ -86,7 +86,7 @@ let humidGraphic = new Chart(humidChart, {
         borderColor: ["rgba(43, 96, 27, 1)"],
         borderWidth: 2,
         tension: 0.2,
-        pointRadius: 0,
+        pointRadius: 0.1,
       },
     ],
   },
