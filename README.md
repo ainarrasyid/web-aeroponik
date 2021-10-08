@@ -1,3 +1,5 @@
 # web-aeroponik
 
-Link : https://aeroponikmonitoring.netlify.app/
+feel free to contribute ^-^
+
+Demo : https://aeroponikmonitoring.netlify.app/
